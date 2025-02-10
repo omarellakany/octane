@@ -1,25 +1,18 @@
-FROM node:20-alpine AS builder
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm ci
-
-COPY . .
-
-RUN npm run build
-
 FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci --only=production
+RUN rm -rf node_modules
+RUN npm install
 
-COPY --from=builder /usr/src/app/dist ./dist
+COPY . .
+
+RUN rm -rf dist
+
+RUN npm run build
 
 EXPOSE 3000
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start"]

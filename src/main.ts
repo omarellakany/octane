@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import { DataSource } from 'typeorm';
 import { AppModule } from './app.module';
 import { AppConfig, Environment } from './config/app.config';
 import { seedDatabase } from './scripts/seed-database';
@@ -11,7 +12,7 @@ import { seedDatabase } from './scripts/seed-database';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  await seedDatabase();
+  await seedDatabase(app.get(DataSource));
 
   const configService = app.get(ConfigService<AppConfig>);
   const isProd = configService.get('env') === Environment.Production;

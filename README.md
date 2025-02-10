@@ -62,6 +62,22 @@ To authenticate:
 Authorization: Bearer <your_jwt_token>
 ```
 
+3- Add a reading interval
+
+```
+{
+"bookId": 1,
+"startPage": 1,
+"endPage": 100
+}
+```
+
+4- Get best five books
+
+```
+GET /books/best-five
+```
+
 ## 🔧 Technology Stack
 
 - **Backend Framework**: NestJS

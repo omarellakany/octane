@@ -1,14 +1,9 @@
-import { NestFactory } from '@nestjs/core';
 import * as bcrypt from 'bcrypt';
 import { DataSource } from 'typeorm';
-import { AppModule } from '../app.module';
 import { Book } from '../data/entities/Book';
 import { Role, User } from '../data/entities/User';
 
-export async function seedDatabase() {
-  const app = await NestFactory.createApplicationContext(AppModule);
-  const dataSource = app.get(DataSource);
-
+export async function seedDatabase(dataSource: DataSource) {
   try {
     const userRepository = dataSource.getRepository(User);
 
@@ -121,7 +116,5 @@ export async function seedDatabase() {
     console.log('✅ Seed completed');
   } catch (error) {
     console.error('❌ Seed failed:', error);
-  } finally {
-    await app.close();
   }
 }

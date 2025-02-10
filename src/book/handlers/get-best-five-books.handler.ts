@@ -21,10 +21,10 @@ export class GetBestFiveBooksHandler
   async execute(): Promise<RankedBookModel[]> {
     const booksWithReadPages = await this.readingIntervalRepository
       .createQueryBuilder('interval')
-      .select('interval.bookId')
+      .select('interval.bookId', 'intervalBookId')
       .addSelect('SUM(interval.endPage - interval.startPage)', 'totalPagesRead')
       .groupBy('interval.bookId')
-      .orderBy('totalPagesRead', 'DESC')
+      .orderBy('"totalPagesRead"', 'DESC')
       .limit(5)
       .getRawMany();
 
@@ -32,7 +32,7 @@ export class GetBestFiveBooksHandler
       return [];
     }
 
-    const booksIds = booksWithReadPages.map((b) => b.bookId);
+    const booksIds = booksWithReadPages.map((b) => b.intervalBookId);
     const books = await this.bookRepository.findBy({
       id: In(booksIds),
     });
@@ -44,13 +44,16 @@ export class GetBestFiveBooksHandler
     });
 
     return books.map((book) => {
+      const bookWithReadPages = booksWithReadPages.find(
+        (b) => b.intervalBookId === book.id,
+      );
+
       const rankedBook = new RankedBookModel();
       rankedBook.bookId = book.id;
       rankedBook.bookName = book.title;
       rankedBook.numOfPages = book.numOfPages;
       rankedBook.numOfReadPages =
-        booksWithReadPages.find((b) => b.bookId === book.id)?.totalPagesRead ||
-        0;
+        Number(bookWithReadPages?.totalPagesRead) || 0;
       return rankedBook;
     });
   }
