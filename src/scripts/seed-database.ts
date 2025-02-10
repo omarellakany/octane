@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import * as bcrypt from 'bcrypt';
 import { DataSource } from 'typeorm';
 import { AppModule } from '../app.module';
 import { Book } from '../data/entities/Book';
@@ -16,12 +17,11 @@ export async function seedDatabase() {
     });
 
     if (!existingAdmin) {
-      const admin = userRepository.create({
-        email: 'admin@octane.com',
-        password: 'admin123',
-        name: 'Admin User',
-        role: Role.Admin,
-      });
+      const admin = new User();
+      admin.email = 'admin@octane.com';
+      admin.password = await bcrypt.hash('admin123', 10);
+      admin.name = 'Admin User';
+      admin.role = Role.Admin;
 
       await userRepository.save(admin);
       console.log('✅ Admin user created');
@@ -32,12 +32,11 @@ export async function seedDatabase() {
     });
 
     if (!existingUser) {
-      const user = userRepository.create({
-        email: 'user@octane.com',
-        password: 'user123',
-        name: 'User User',
-        role: Role.User,
-      });
+      const user = new User();
+      user.email = 'user@octane.com';
+      user.password = await bcrypt.hash('user123', 10);
+      user.name = 'User User';
+      user.role = Role.User;
 
       await userRepository.save(user);
       console.log('✅ User user created');
