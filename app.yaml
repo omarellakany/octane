@@ -1,0 +1,18 @@
+runtime: nodejs22
+env: standard
+instance_class: F1
+
+env_variables:
+  ENV: "prod"
+  DATABASE_URL: "postgresql://neondb_owner:PBi7V5kGEXHr@ep-silent-sound-a5wf57p8.us-east-2.aws.neon.tech/neondb?sslmode=require"
+  API_KEY: "RpQiKk395aqDTWtSneQLSEcuHoTgetJm"
+  AXIOM_DATASET: "souq_mazad"
+  AXIOM_TOKEN: "xaat-b0104aa6-b3bc-4bf5-a485-063d005b801f"
+  AXIOM_ORG_ID: "gst-ztdi"
+  STORAGE_BUCKET: "souqmazad.appspot.com"
+  RABBITMQ_URL: "amqps://sfapsoft:gDi97_HpOkLThHWL8an29AsmHOQ2mLLk@kangaroo.rmq.cloudamqp.com/sfapsoft"
+  RABBITMQ_QUEUE: "souq_mazad"
+  REDIS_URL: "redis://next-halibut-49631.upstash.io"
+  REDIS_PASSWORD: "AcHfAAIjcDE5ZWYyNDM3NDEwOTE0ZjZhYTY4MmZlNWU2MzI1MTVmY3AxMA"
+  CACHE_TTL: "10"
+
