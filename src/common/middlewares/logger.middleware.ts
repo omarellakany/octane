@@ -1,6 +1,5 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
@@ -8,10 +7,6 @@ export class LoggerMiddleware implements NestMiddleware {
 
   use(req: Request, res: Response, next: NextFunction) {
     this.logger.debug('use');
-
-    const correlationId = uuidv4();
-    req.headers['x-correlation-id'] = correlationId;
-    res.setHeader('x-correlation-id', correlationId);
 
     this.logger.log(`${req.method} ${req.originalUrl}`, {
       headers: req.headers,
