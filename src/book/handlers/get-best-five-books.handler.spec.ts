@@ -44,8 +44,8 @@ describe('GetBestFiveBooksHandler', () => {
       orderBy: jest.fn().mockReturnThis(),
       limit: jest.fn().mockReturnThis(),
       getRawMany: jest.fn().mockResolvedValue([
-        { bookId: 1, totalPagesRead: 100 },
-        { bookId: 2, totalPagesRead: 50 },
+        { intervalBookId: 1, totalPagesRead: 100 },
+        { intervalBookId: 2, totalPagesRead: 50 },
       ]),
     };
 
