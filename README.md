@@ -27,6 +27,41 @@ The application will be available at `http://localhost:3000`
 - Reading intervals logging
 - RESTful API
 
+// ... existing README content ...
+
+## Authentication
+
+The application comes with two pre-seeded user accounts for testing:
+
+### Admin Account
+
+- Email: `admin@octane.com`
+- Password: `admin123`
+- Role: Admin
+
+### Regular User Account
+
+- Email: `user@octane.com`
+- Password: `user123`
+- Role: User
+
+To authenticate:
+
+1. Send a POST request to `/auth/login` with the following body:
+
+```
+{
+"email": "admin@octane.com",
+"password": "admin123"
+}
+```
+
+2. The response will include a JWT token that should be included in subsequent requests in the Authorization header:
+
+```
+Authorization: Bearer <your_jwt_token>
+```
+
 ## 🔧 Technology Stack
 
 - **Backend Framework**: NestJS
